@@ -140,6 +140,50 @@ const { title } = Astro.props;
       padding: 2.5rem 3rem 3rem;
       max-width: 900px;
     }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      nav {
+        width: 100%;
+        min-width: unset;
+        border-right: none;
+        border-bottom: 1px solid #252525;
+        padding: 1.2rem 1.5rem;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      nav .logo {
+        margin-bottom: 0;
+      }
+
+      nav .section-label {
+        display: none;
+      }
+
+      nav ul {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+      }
+
+      nav li {
+        margin-bottom: 0;
+      }
+
+      main {
+        padding: 1.5rem;
+        max-width: 100%;
+      }
+
+      footer {
+        padding: 0.6rem 1.5rem;
+      }
+    }
   </style>
 </head>
 
@@ -161,7 +205,8 @@ const { title } = Astro.props;
 
   <footer>
     <span>made out of ❤️ & boredom</span>
-    <span>built with <a href="https://astro.build" target="_blank">astro • inspired by <a href="https://namishh.com" target="_blank">namishh</a></a></span>
+    <span>built with <a href="https://astro.build" target="_blank">astro • inspired by <a href="https://namishh.com"
+          target="_blank">namishh</a></a></span>
   </footer>
 </body>
 
