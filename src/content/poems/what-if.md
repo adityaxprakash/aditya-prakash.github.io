@@ -13,7 +13,6 @@ there is no hurry to get somewhere<br />
 nor fear someone will get there first<br />
 life is at a still, but still i am happy.<br />
 <br />
-
 the night falls and silence prevails<br />
 the stars light up the night sky<br />
 in lieu of the grayness of haze.<br />
