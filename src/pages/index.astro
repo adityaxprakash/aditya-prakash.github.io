@@ -1,17 +1,144 @@
 ---
+import Base from '../layouts/Base.astro';
 
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+.sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+.slice(0, 5);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title="index">
+<div class="hero">
+  <img src="https://github.com/adityaxprakash.png" alt="avatar" />
+  <p class="name">aditya prakash</p>
+  <p class="tagline">building things, occasionally.</p>
+  <div class="divider"></div>
+  <div class="body">
+    <p>hi! this website was made because i was bored and wanted to do something productive T_T.</p>
+    <p>there is not much on here right now. i hope to update it soon enough. until then, feel free to check out the
+      poems and the blog.</p>
+  </div>
+  <div class="hero-links">
+    <a href="https://github.com/adityaxprakash">github</a>
+    <a href="mailto:apbudhia@gmail.com">email me</a>
+  </div>
+</div>
+
+<section>
+  <h2>recent posts</h2>
+  <ul class="post-list">
+    {posts.map(p => (
+    <li>
+      <a href={`/blog/${p.id.replace(/\.md$/, '' )}`}>{p.data.title}</a>
+      <span>{p.data.date?.toDateString()}</span>
+    </li>
+    ))}
+  </ul>
+  {posts.length === 0 && <p class="empty">nothing yet.</p>}
+</section>
+</Base>
+
+<style>
+  .hero img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid #222;
+    display: block;
+    margin-bottom: 1.2rem;
+  }
+
+  .name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #e8e8e8;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .tagline {
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 0;
+  }
+
+  .divider {
+    width: 24px;
+    height: 1px;
+    background: #222;
+    margin: 1.6rem 0;
+  }
+
+  .hero-links {
+    display: flex;
+    gap: 16px;
+  }
+
+  .hero-links a {
+    font-size: 13px;
+    color: #555;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #2a2a2a;
+  }
+
+  .hero-links a:hover {
+    color: #aaa;
+  }
+
+  .empty {
+    font-size: 13px;
+    color: #333;
+  }
+
+
+  section {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  section h2 {
+    font-size: 18px;
+    color: #333;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #181818;
+  }
+
+  .post-list {
+    list-style: none;
+    margin-left: -1rem
+  }
+
+  .post-list li {
+    display: flex;
+    align-items: baseline;
+    border-bottom: none;
+  }
+
+  .post-list li::before {
+    content: '▸';
+    color: #aaa;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  .post-list a,
+  .post-list a:visited {
+    color: #aaa;
+    font-size: 16px;
+    text-decoration: none;
+  }
+
+  .post-list a:hover {
+    color: #eee;
+  }
+
+  .post-list span {
+    margin-left: 15px;
+    color: #333;
+    font-size: 11px;
+  }
+</style>

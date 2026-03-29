@@ -1,0 +1,114 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+---
+
+<Base title="blog">
+<section>
+  <div class="section-header">
+    <h2>my thoughts</h2>
+    <p>writing about things i notice or read about.</p>
+  </div>
+  <ul class="post-list">
+    {posts.map(p => (
+    <li class="post-item">
+      <a href={`/blog/${p.id}`}>{p.data.title}</a>
+      {p.data.description && <p class="post-desc">{p.data.description}</p>}
+      <div class="post-meta">
+        <span class="post-date">{p.data.date?.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day:
+          'numeric' })}</span>
+        {p.data.tags && (
+        <div class="post-tags">
+          {p.data.tags.map(tag => <span class="tag">{tag}</span>)}
+        </div>
+        )}
+      </div>
+    </li>
+    ))}
+  </ul>
+</section>
+</Base>
+
+<style>
+  section {
+    margin-top: 0;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .section-header h2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #e8e8e8;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .section-header p {
+    font-size: 14px;
+    color: #444;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .post-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #141414;
+  }
+
+  .post-item:first-child {
+    border-top: 1px solid #141414;
+  }
+
+  .post-item a {
+    font-size: 20px;
+    color: #eee;
+    text-decoration: none;
+  }
+
+  .post-item a:visited {
+    color: #eee;
+  }
+
+  .post-desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 2px;
+  }
+
+  .post-date {
+    font-size: 11px;
+    color: #333;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 10px;
+    color: #3a3a3a;
+    border: 1px solid #222;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+</style>
